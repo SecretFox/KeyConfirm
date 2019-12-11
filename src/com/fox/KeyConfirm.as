@@ -1,6 +1,7 @@
 import com.GameInterface.DialogIF;
 import com.GameInterface.Input;
 import com.GameInterface.RadioButtonsDialog;
+
 class com.fox.KeyConfirm{
 	static var dialogue:RadioButtonsDialog;
 	public static function main(swfRoot:MovieClip):Void{
@@ -19,16 +20,11 @@ class com.fox.KeyConfirm{
 	public static function FPressed(){
 		if (dialogue){
 			dialogue.Respond(_global.Enums.StandardButtonID.e_ButtonIDAccept);
-			dialogue.Close();
-			dialogue = undefined;
 		}
 	}
 	public static function ESCPressed(){
 		if (dialogue){
 			dialogue.Respond(_global.Enums.StandardButtonID.e_ButtonIDCancel);
-			dialogue.Close();
-			dialogue = undefined;
-			
 		}
 	}
 	public function Load(){
@@ -37,12 +33,16 @@ class com.fox.KeyConfirm{
 	public function Unload(){
 		DialogIF.SignalShowDialog.Disconnect(SetDialogue, this);
 	}
-	private function ClearWindow(){
-		dialogue.SignalSelectedAS.Disconnect(ClearWindow, this);
-		dialogue = undefined;
-	}
 	private function SetDialogue(dialog:RadioButtonsDialog){
 		dialogue = dialog;
 		dialogue.SignalSelectedAS.Connect(ClearWindow, this);
 	}
+	// trying to close right after respond doesnt work
+	// works fine with SignalSelectedAS though
+	private function ClearWindow(buttonId, Variant, selection){
+		dialogue.SignalSelectedAS.Disconnect(ClearWindow, this);
+		dialogue.Close();
+		dialogue = undefined;
+	}
+
 }

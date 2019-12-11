@@ -20,12 +20,15 @@ class com.fox.KeyConfirm{
 		if (dialogue){
 			dialogue.Respond(_global.Enums.StandardButtonID.e_ButtonIDAccept);
 			dialogue.Close();
+			dialogue = undefined;
 		}
 	}
 	public static function ESCPressed(){
 		if (dialogue){
 			dialogue.Respond(_global.Enums.StandardButtonID.e_ButtonIDCancel);
 			dialogue.Close();
+			dialogue = undefined;
+			
 		}
 	}
 	public function Load(){
@@ -34,7 +37,12 @@ class com.fox.KeyConfirm{
 	public function Unload(){
 		DialogIF.SignalShowDialog.Disconnect(SetDialogue, this);
 	}
+	private function ClearWindow(){
+		dialogue.SignalSelectedAS.Disconnect(ClearWindow, this);
+		dialogue = undefined;
+	}
 	private function SetDialogue(dialog:RadioButtonsDialog){
 		dialogue = dialog;
+		dialogue.SignalSelectedAS.Connect(ClearWindow, this);
 	}
 }

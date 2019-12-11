@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<Root>
+  <Module  name = "KeyConfirm"
+    movie       = "KeyConfirm\KeyConfirm.swf"
+    flags       = ""
+    depth_layer = "Top"
+    sub_depth   = "2"
+    variable    = "KeyConfirm"
+    criteria    = "KeyConfirm &amp;&amp; (guimode &amp; (GUIMODEFLAGS_INPLAY | GUIMODEFLAGS_ENABLEALLGUI))"
+  />
+</Root>
